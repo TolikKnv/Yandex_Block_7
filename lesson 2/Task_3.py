@@ -13,11 +13,12 @@ WHERE wrappers.title LIKE '%праздн%';
 results_2 = cur.execute('''
 SELECT ice_cream.title, categories.slug, wrappers.title, MIN(ice_cream.price), AVG(ice_cream.price)
 FROM ice_cream
-JOIN wrappers ON ice_cream.wrapper_id = wrappers.id
-WHERE wrappers.title LIKE '%праздн%';
+LEFT JOIN wrappers ON ice_cream.wrapper_id = wrappers.id
+JOIN categories ON ice_cream.category_id = categories.id
+GROUP BY categories.slug;
 ''')
 
-for result in results:
+for result in results_2:
     print(result)
 
 con.close()
